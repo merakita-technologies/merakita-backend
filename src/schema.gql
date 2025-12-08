@@ -1,0 +1,200 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input BookingInput {
+  addOnIds: [String!]
+  checkInDate: String!
+  checkOutDate: String!
+  guestNames: [String!]
+  roomUnitId: String!
+  specialRequests: String
+}
+
+type BookingPropertyType {
+  city: String!
+  country: String!
+  id: String!
+  name: String!
+}
+
+type BookingRoomUnitType {
+  basePricePerNight: Float!
+  capacity: Int!
+  id: String!
+  roomNumber: String!
+  roomType: String!
+}
+
+type BookingType {
+  bookingDate: DateTime!
+  checkInDate: String!
+  checkOutDate: String!
+  durationNights: Int!
+  guestNames: [String!]
+  id: String!
+  isActive: Boolean!
+  payment: PaymentType
+  property: BookingPropertyType
+  roomUnit: BookingRoomUnitType
+  specialRequests: String
+  status: String!
+  totalPrice: Float!
+  user: BookingUserType
+}
+
+type BookingUserType {
+  email: String!
+  fullName: String!
+  id: String!
+}
+
+type ConfirmPaymentResponse {
+  message: String!
+  payment: PaymentType
+  success: Boolean!
+}
+
+type CreateBookingResponse {
+  booking: BookingType
+  message: String!
+  success: Boolean!
+}
+
+type CreateReviewResponse {
+  message: String!
+  review: ReviewType
+  success: Boolean!
+}
+
+type CreateUserResponse {
+  message: String!
+  success: Boolean!
+  user: UserType
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type LoginResponse {
+  message: String!
+  success: Boolean!
+  token: String
+  user: UserType
+}
+
+type Mutation {
+  confirmPayment(paymentId: String!, paymentMethod: String!): ConfirmPaymentResponse!
+  createBooking(input: BookingInput!): CreateBookingResponse!
+  createReview(input: ReviewInput!): CreateReviewResponse!
+  createUser(input: RegisterInput!): CreateUserResponse!
+  login(email: String!, password: String!): LoginResponse!
+}
+
+type PaymentType {
+  amount: Float!
+  id: String!
+  paymentMethod: String
+  status: String!
+}
+
+type PropertyType {
+  address: String!
+  cancellationPolicy: String
+  checkInTime: String
+  checkOutTime: String
+  city: String!
+  country: String!
+  createdAt: DateTime!
+  description: String
+  dynamicPricingEnabled: Boolean!
+  id: String!
+  imageUrls: [String!]
+  isActive: Boolean!
+  latitude: Float
+  longitude: Float
+  name: String!
+  owner: UserOwnerType
+  propertyType: String!
+  rating: Float!
+  rooms: [RoomUnitType!]
+  updatedAt: DateTime!
+}
+
+type Query {
+  getPaymentByBooking(bookingId: String!): PaymentType!
+  me: String!
+  myBookings(status: String): [BookingType!]!
+  properties(city: String, country: String, propertyType: String, search: String): [PropertyType!]!
+  property(id: String!): PropertyType
+  propertyReviews(propertyId: String!): [ReviewType!]!
+}
+
+input RegisterInput {
+  email: String!
+  fullName: String
+  password: String!
+  phoneNumber: String
+}
+
+input ReviewInput {
+  bookingId: String!
+  comment: String!
+  isPublic: Boolean
+  propertyId: String!
+  rating: Int!
+  title: String!
+}
+
+type ReviewPropertyType {
+  city: String!
+  country: String!
+  id: String!
+  name: String!
+}
+
+type ReviewType {
+  comment: String!
+  helpfulVotes: Int!
+  id: String!
+  isPublic: Boolean!
+  isVerified: Boolean!
+  property: ReviewPropertyType
+  rating: Int!
+  reviewDate: DateTime!
+  title: String!
+  user: ReviewUserType
+}
+
+type ReviewUserType {
+  email: String!
+  fullName: String!
+  id: String!
+}
+
+type RoomUnitType {
+  basePricePerNight: Float!
+  capacity: Int!
+  description: String
+  id: String!
+  images: [String!]
+  isActive: Boolean!
+  roomNumber: String!
+  roomType: String!
+}
+
+type UserOwnerType {
+  email: String!
+  fullName: String!
+  id: String!
+}
+
+type UserType {
+  email: String!
+  fullName: String!
+  id: String!
+  loyaltyPoints: Float
+  phoneNumber: String
+}

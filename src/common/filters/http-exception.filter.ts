@@ -13,10 +13,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
 
   catch(exception: unknown, host: ArgumentsHost) {
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
-
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
@@ -32,11 +28,29 @@ export class HttpExceptionFilter implements ExceptionFilter {
       exception instanceof Error ? exception.stack : '',
     );
 
-    response.status(status).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-      message: typeof message === 'string' ? message : (message as any).message,
-    });
+    // Try to get HTTP context
+    try {
+      const ctx = host.switchToHttp();
+      const response = ctx.getResponse<Response>();
+      const request = ctx.getRequest<Request>();
+
+      // Check if response has status function (HTTP context)
+      if (response && typeof response.status === 'function') {
+        response.status(status).json({
+          statusCode: status,
+          timestamp: new Date().toISOString(),
+          path: request?.url || 'unknown',
+          message: typeof message === 'string' ? message : (message as any).message,
+        });
+      } else {
+        // GraphQL context - errors are handled by GraphQL layer
+        // Just log the error
+        this.logger.debug('GraphQL error - handled by GraphQL layer');
+      }
+    } catch (error) {
+      // If switchToHttp fails, it's likely a GraphQL context
+      // GraphQL will handle the error response
+      this.logger.debug('GraphQL error - handled by GraphQL layer');
+    }
   }
 }

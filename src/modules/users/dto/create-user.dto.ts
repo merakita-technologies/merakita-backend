@@ -51,6 +51,10 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   lastName: string;
+
+  @ApiProperty({ example: '+6281234567890', required: false })
+  @IsString()
+  phoneNumber?: string;
 }
 
 export class UpdateUserDto {

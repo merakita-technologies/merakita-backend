@@ -34,7 +34,7 @@ export class UsersService {
       skip,
       take,
       order: { createdAt: 'DESC' },
-      select: ['id', 'email', 'firstName', 'lastName', 'isActive', 'createdAt', 'updatedAt'], // Exclude password
+      select: ['id', 'email', 'firstName', 'lastName', 'phoneNumber', 'loyaltyPoints', 'isActive', 'createdAt', 'updatedAt'], // Exclude password
     });
 
     const totalPages = Math.ceil(total / limit);
@@ -69,7 +69,7 @@ export class UsersService {
   async findByEmail(email: string): Promise<User | null> {
     return await this.usersRepository.findOne({ 
       where: { email },
-      select: ['id', 'email', 'password', 'firstName', 'lastName', 'isActive'] // Include password for auth
+      select: ['id', 'email', 'password', 'firstName', 'lastName', 'phoneNumber', 'loyaltyPoints', 'isActive'] // Include password for auth
     });
   }
 

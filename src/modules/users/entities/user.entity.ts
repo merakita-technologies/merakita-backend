@@ -18,6 +18,12 @@ export class User extends BaseEntity {
   @Column()
   lastName: string;
 
+  @Column({ nullable: true })
+  phoneNumber?: string;
+
+  @Column({ default: 0 })
+  loyaltyPoints: number;
+
   @Column({ default: true })
   isActive: boolean;
 

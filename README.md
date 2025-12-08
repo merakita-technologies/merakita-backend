@@ -23,12 +23,53 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Manggon Backend - NestJS GraphQL API for property booking platform.
+
+## 🚀 Quick Start
+
+### 1. Database Setup
+
+Lihat [DATABASE_SETUP.md](./DATABASE_SETUP.md) untuk panduan lengkap setup database.
+
+**Quick setup:**
+```bash
+# Create database
+psql -U postgres -c "CREATE DATABASE manggon;"
+
+# Create .env file (copy from .env.example)
+cp .env.example .env
+# Edit .env dengan database credentials Anda
+```
+
+### 2. Install & Run
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm run start:dev
+
+# Run seed data (optional)
+pnpm run seed
+```
+
+### 3. Access
+
+- **GraphQL Playground**: http://localhost:3010/graphql
+- **REST API**: http://localhost:3010/api/v1
+- **Swagger Docs**: http://localhost:3010/api/docs
+
+## 📚 Documentation
+
+- [DATABASE_SETUP.md](./DATABASE_SETUP.md) - Database setup guide
+- [BACKEND_CRUD_DOCUMENTATION.md](./BACKEND_CRUD_DOCUMENTATION.md) - Complete API documentation
+- [COMPLETE_BACKEND_CODE.md](./COMPLETE_BACKEND_CODE.md) - Code structure overview
 
 ## Project setup
 
 ```bash
-$ npm install
+$ pnpm install
 ```
 
 ## Compile and run the project

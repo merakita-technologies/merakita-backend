@@ -43,8 +43,13 @@ async function bootstrap() {
     })
   );
 
-  // CORS
-  app.enableCors();
+  // CORS - Allow mobile and admin
+  app.enableCors({
+    origin: true, // Allow all origins for development
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  });
 
   // Global prefix
   app.setGlobalPrefix('api/v1');
@@ -52,8 +57,12 @@ async function bootstrap() {
   // Swagger documentation
   setupSwagger(app);
 
-  await app.listen(3000);
-  console.log(`Application is running on: ${await app.getUrl()}`);
-  console.log(`Swagger documentation: ${await app.getUrl()}/api/docs`);
+  // Listen on all network interfaces (0.0.0.0) to allow access from mobile devices
+  await app.listen(3010, '0.0.0.0');
+  console.log(`Application is running on: http://0.0.0.0:3010`);
+  console.log(`Local access: http://localhost:3010`);
+  console.log(`Network access: http://192.168.1.4:3010 (your IP)`);
+  console.log(`Swagger documentation: http://localhost:3010/api/docs`);
+  console.log(`GraphQL endpoint: http://localhost:3010/graphql`);
 }
 bootstrap();

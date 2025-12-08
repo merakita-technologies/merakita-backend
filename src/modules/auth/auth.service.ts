@@ -33,6 +33,8 @@ export class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        loyaltyPoints: user.loyaltyPoints,
       },
     };
   }
@@ -58,6 +60,8 @@ export class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        loyaltyPoints: user.loyaltyPoints,
       },
     };
   }
